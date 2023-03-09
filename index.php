@@ -3,6 +3,7 @@
 require "./vendor/autoload.php";
 
 use Dotenv\Dotenv;
+use EScooters\Importers\BitMobilityDataImporter;
 use EScooters\Importers\BirdDataImporter;
 use EScooters\Importers\BoltDataImporter;
 use EScooters\Importers\DataImporter;
@@ -32,6 +33,7 @@ $providers = new Providers();
 
 /** @var array<DataImporter> $dataImporters */
 $dataImporters = [
+    new BitMobilityDataImporter($cities, $countries), /*100% works*/
     new BoltDataImporter($cities, $countries), /*100% works*/
     new SpinDataImporter($cities, $countries), /*100% works*/
     new NeuronDataImporter($cities, $countries), /*100% works*/

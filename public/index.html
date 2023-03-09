@@ -102,9 +102,7 @@
                                 <l-tooltip :options="{ direction: 'right', offset: [16, 2] }">
                                     <i class="flat flag" :class="marker.country"></i>
                                     {{ marker.name }}:
-                                    <span class="capitalize">
                                     {{ marker.providers.join(', ') }}
-                                </span>
                                 </l-tooltip>
                                 <l-icon :icon-size="dynamicSize" :icon-anchor="dynamicAnchor" :icon-url="marker.icon"></l-icon>
                             </l-marker>
@@ -232,7 +230,6 @@
             let south = null
 
             for (let marker of this.markers) {
-              console.log(marker.coordinates)
               if (north === null || marker.coordinates[0] > north[0]) {
                 north = marker.coordinates
               }
@@ -276,6 +273,7 @@
                 )
               )
             }
+
 
             this.centerMapToMarkers()
           })
