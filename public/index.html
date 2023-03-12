@@ -98,11 +98,13 @@
                     <div id="map">
                         <l-map class="rounded-md" :zoom="3" ref="map">
                             <l-tile-layer :url="layer"></l-tile-layer>
-                            <l-marker v-for="marker in markers" :lat-lng="marker.coordinates" :name="marker.name">
+                            <l-marker v-for="marker in markers" :key="marker.id" :lat-lng="marker.coordinates" :name="marker.name">
                                 <l-tooltip :options="{ direction: 'right', offset: [16, 2] }">
                                     <i class="flat flag" :class="marker.country"></i>
-                                    {{ marker.name }}:
-                                    {{ marker.providers.join(', ') }}
+                                        {{ marker.name }}:
+                                    <span class="capitalize">
+                                        {{ marker.providers.join(', ') }}
+                                    </span>
                                 </l-tooltip>
                                 <l-icon :icon-size="dynamicSize" :icon-anchor="dynamicAnchor" :icon-url="marker.icon"></l-icon>
                             </l-marker>
@@ -273,7 +275,6 @@
                 )
               )
             }
-
 
             this.centerMapToMarkers()
           })

@@ -25,7 +25,7 @@ class NeuronDataImporter extends DataImporter implements HtmlDataSource
         $crawler = new Crawler($html);
         $countries = $crawler->filter("h2.elementor-heading-title > a");
 
-        /** @var DOMElement $section */
+        /** @var DOMElement $country */
         foreach ($countries as $country) {
             $url = $country->getAttribute("href");
             $html = file_get_contents($url);

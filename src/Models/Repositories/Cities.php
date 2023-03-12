@@ -48,7 +48,7 @@ class Cities implements JsonSerializable
         return array_map(fn(City $city): array => [
             "name" => $city->getName(),
             "country" => $city->getCountry()->getId(),
-            "providers" => $city->getProvidersNames(),
+            "providers" => $city->getProvidersIds(),
             "coordinates" => $city->getCoordinates(),
             "icon" => $city->getProvidersIconId(),
         ], $this->all());

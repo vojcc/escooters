@@ -48,13 +48,6 @@ class City implements JsonSerializable
         return $ids;
     }
 
-    public function getProvidersNames(): array
-    {
-        $names = array_values(array_map(fn(Provider $provider): string => $provider->getName(), $this->providers));
-
-        return $names;
-    }
-
     public function getProvidersIconId(): string
     {
         $providers = $this->getProvidersIds();

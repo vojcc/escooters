@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace EScooters\Importers;
 
-use EScooters\Importers\DataSources\JsonDataSource;
-use EScooters\Normalizers\CountryNamesNormalizer;
+use DOMElement;
+use EScooters\Exceptions\CityNotAssignedToAnyCountryException;
+use EScooters\Importers\DataSources\HtmlDataSource;
+use EScooters\Utils\HardcodedCitiesToCountriesAssigner;
+use Symfony\Component\DomCrawler\Crawler;
 
-class TierDataImporter extends DataImporter implements JsonDataSource
+class TierDataImporter extends DataImporter implements HtmlDataSource
 {
-    protected array $entries;
+    protected Crawler $sections;
 
     public function getBackground(): string
     {
@@ -18,40 +21,34 @@ class TierDataImporter extends DataImporter implements JsonDataSource
 
     public function extract(): static
     {
-        $json = file_get_contents("https://www.tier.app/page-data/sq/d/134304685.json");
-        $this->entries = json_decode($json, associative: true)["data"]["craft"]["entries"];
+        $html = file_get_contents("https://www.tier.app/en/where-to-find-us");
+        $crawler = new Crawler($html);
+        $this->sections = $crawler->filter("div.mx-auto > section > li > div");
 
         return $this;
     }
 
     public function transform(): static
     {
-        $previousCountryName = null;
+        /** @var DOMElement $section */
+        foreach ($this->sections as $section) {
+            $country = null;
 
-        foreach ($this->entries as $entry) {
-            if ($previousCountryName === $entry["title"] || !isset($entry["headline"])) {
-                continue;
-            }
+            foreach ($section->childNodes as $div) {
+                foreach ($div->childNodes as $node) {
+                    if ($node->nodeName === "#text") {
+                        $countryName = preg_replace('/\d+$/', '', $node->nodeValue);
+                    }
 
-            if ($entry["title"] === "Sverige Göteborg") {
-                continue;
-            }
-
-            $previousCountryName = $entry["title"];
-
-            $countryName = CountryNamesNormalizer::normalize($entry["title"]);
-            $country = $this->countries->retrieve($countryName);
-
-            $cities = explode(",", $entry["headline"]);
-            foreach ($cities as $cityName) {
-                $cityName = trim($cityName);
-
-                if ($cityName === "Kundtjänst" || $cityName === "Dornbirndie") {
-                    continue;
+                    elseif ($node->nodeName === "div")  {
+                        $value = trim($node->nodeValue);
+                        if ($value) {
+                            $country = $this->countries->retrieve($countryName);
+                            $city = $this->cities->retrieve($value, $country);
+                            $this->provider->addCity($city);
+                        }
+                    }
                 }
-
-                $city = $this->cities->retrieve($cityName, $country);
-                $this->provider->addCity($city);
             }
         }
 

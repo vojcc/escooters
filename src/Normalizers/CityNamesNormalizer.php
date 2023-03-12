@@ -9,6 +9,7 @@ class CityNamesNormalizer
     public static function normalize(string $name): string
     {
         $name = match ($name) {
+            "Eilat" => "Ejlat",
             "Malta" => "La Valetta",
             "Ruhrpott" => "Düsseldorf",
             "Brunswick" => "Braunschweig",

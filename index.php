@@ -33,18 +33,18 @@ $providers = new Providers();
 
 /** @var array<DataImporter> $dataImporters */
 $dataImporters = [
-    new BitMobilityDataImporter($cities, $countries), /*100% works*/
-    new BoltDataImporter($cities, $countries), /*100% works*/
-    new SpinDataImporter($cities, $countries), /*100% works*/
-    new NeuronDataImporter($cities, $countries), /*100% works*/
-    new HelbizDataImporter($cities, $countries), /*100% works*/
-    new WhooshDataImporter($cities, $countries), /*100% works*/
-    new QuickDataImporter($cities, $countries), /*100% works*/
-    new VoiDataImporter($cities, $countries), /*100% works*/
-    new BirdDataImporter($cities, $countries), /*50% works - some cities are not assigned*/
+    new BitMobilityDataImporter($cities, $countries),
+    new BoltDataImporter($cities, $countries),
+    new SpinDataImporter($cities, $countries),
+    new NeuronDataImporter($cities, $countries),
+    new HelbizDataImporter($cities, $countries),
+    new WhooshDataImporter($cities, $countries),
+    new QuickDataImporter($cities, $countries),
+    new VoiDataImporter($cities, $countries),
+    new BirdDataImporter($cities, $countries),
+    new LimeDataImporter($cities, $countries),
+    new TierDataImporter($cities, $countries),
 
-//    new LimeDataImporter($cities, $countries), /*doesn't work - import failed*/
-//    new TierDataImporter($cities, $countries), /*doesn't work - error*/
 //    new LinkDataImporter($cities, $countries), /*doesn't work - 0 cities fetched*/
 //    new DottDataImporter($cities, $countries), /*doesn't work - 0 cities fetched*/
 ];
