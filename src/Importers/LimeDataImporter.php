@@ -24,7 +24,7 @@ class LimeDataImporter extends DataImporter implements HtmlDataSource
         $html = file_get_contents("https://www.li.me/locations");
 
         $crawler = new Crawler($html);
-        $this->sections = $crawler->filter(".pb-4 > .box-content");
+        $this->sections = $crawler->filter(".pb-4 > .box-content .inline-block");
 
         return $this;
     }
@@ -33,47 +33,35 @@ class LimeDataImporter extends DataImporter implements HtmlDataSource
     {
         /** @var DOMElement $section */
         foreach ($this->sections as $section) {
-            foreach ($section->childNodes as $node) {
+            $country = null;
+            $cityName = trim($section->nodeValue);
+            $countryName = trim($section->parentNode->parentNode->previousSibling->previousSibling->nodeValue);
 
-                $country = null;
-
-                if ($node->nodeName === "h2") {
-                    $countryName = trim($node->nodeValue ?? "");
+            if ($cityName) {
+                if (str_contains($countryName, "US")) {
+                    $country = $this->countries->retrieve("United States");
                 }
-
-                elseif ($node->nodeName === "div") {
-                    foreach ($node->childNodes as $div) {
-                        foreach ($div->childNodes as $city) {
-                            $value = trim($city->nodeValue);
-                            if ($value) {
-                                if (str_contains($countryName, "US")) {
-                                    $country = $this->countries->retrieve("United States");
-                                }
-                                elseif (str_contains($countryName, "Canada")) {
-                                    $country = $this->countries->retrieve("Canada");
-                                }
-                                elseif (str_contains($countryName, "Israel")) {
-                                    $country = $this->countries->retrieve("Israel");
-                                } else {
-                                    try {
-                                        $hardcoded = HardcodedCitiesToCountriesAssigner::assign($value);
-                                        if ($hardcoded) {
-                                            $country = $this->countries->retrieve($hardcoded);
-                                        }
-
-                                        $city = $this->cities->retrieve($value, $country);
-                                        $this->provider->addCity($city);
-                                    } catch (CityNotAssignedToAnyCountryException $exception) {
-                                        echo $exception->getMessage() . PHP_EOL;
-                                        continue;
-                                    }
-                                }
-                                $city = $this->cities->retrieve($value, $country);
-                                $this->provider->addCity($city);
-                            }
+                elseif (str_contains($countryName, "Canada")) {
+                    $country = $this->countries->retrieve("Canada");
+                }
+                elseif (str_contains($countryName, "Israel")) {
+                    $country = $this->countries->retrieve("Israel");
+                } else {
+                    try {
+                        $hardcoded = HardcodedCitiesToCountriesAssigner::assign($cityName);
+                        if ($hardcoded) {
+                            $country = $this->countries->retrieve($hardcoded);
                         }
+
+                        $city = $this->cities->retrieve($cityName, $country);
+                        $this->provider->addCity($city);
+                    } catch (CityNotAssignedToAnyCountryException $exception) {
+                        echo $exception->getMessage() . PHP_EOL;
+                        continue;
                     }
                 }
+                $city = $this->cities->retrieve($cityName, $country);
+                $this->provider->addCity($city);
             }
         }
 

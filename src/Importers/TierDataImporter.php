@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace EScooters\Importers;
 
 use DOMElement;
-use EScooters\Exceptions\CityNotAssignedToAnyCountryException;
 use EScooters\Importers\DataSources\HtmlDataSource;
-use EScooters\Utils\HardcodedCitiesToCountriesAssigner;
 use Symfony\Component\DomCrawler\Crawler;
 
 class TierDataImporter extends DataImporter implements HtmlDataSource

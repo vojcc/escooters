@@ -9,6 +9,7 @@ use EScooters\Importers\BoltDataImporter;
 use EScooters\Importers\DataImporter;
 use EScooters\Importers\DottDataImporter;
 use EScooters\Importers\HelbizDataImporter;
+use EScooters\Importers\HulajDataImporter;
 use EScooters\Importers\LimeDataImporter;
 use EScooters\Importers\LinkDataImporter;
 use EScooters\Importers\NeuronDataImporter;
@@ -33,20 +34,23 @@ $providers = new Providers();
 
 /** @var array<DataImporter> $dataImporters */
 $dataImporters = [
+    new HulajDataImporter($cities, $countries),
+    new TierDataImporter($cities, $countries),
     new BitMobilityDataImporter($cities, $countries),
+    new HelbizDataImporter($cities, $countries),
     new BoltDataImporter($cities, $countries),
     new SpinDataImporter($cities, $countries),
     new NeuronDataImporter($cities, $countries),
-    new HelbizDataImporter($cities, $countries),
     new WhooshDataImporter($cities, $countries),
     new QuickDataImporter($cities, $countries),
     new VoiDataImporter($cities, $countries),
     new BirdDataImporter($cities, $countries),
+    new DottDataImporter($cities, $countries),
     new LimeDataImporter($cities, $countries),
-    new TierDataImporter($cities, $countries),
 
 //    new LinkDataImporter($cities, $countries), /*doesn't work - 0 cities fetched*/
-//    new DottDataImporter($cities, $countries), /*doesn't work - 0 cities fetched*/
+
+
 ];
 
 $timestamp = date("Y-m-d H:i:s");
