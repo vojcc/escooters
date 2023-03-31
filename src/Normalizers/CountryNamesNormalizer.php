@@ -13,6 +13,7 @@ class CountryNamesNormalizer
         }
 
         return match ($name) {
+            "Österreich" => "Austria",
             "Czech Republic" => "Czechia",
             "UAE" => "United Arab Emirates",
             "Uk" => "United Kingdom",
