@@ -33,6 +33,35 @@
 
 <img src="https://user-images.githubusercontent.com/92044526/223875974-ccab5e91-5afc-419c-bacc-39828e3bf8f8.png" width="300" height="250" />
 
+### Technically
+I know this is just PoC but in order to properly develop and maintain the application, it is necessary to refactor the code and separate it into components. This will allow for better organization, reusability, and easier debugging.
+
+Additionally, to implement authentication and other functionality, a backend written in a framework rather than pure PHP will be necessary. This will provide a more robust and secure solution, with built-in functionality for handling user authentication, data storage and retrieval, and other important features.
+
+
+### Last build
+```
+Build date: 2023-03-31 02:07:10
+
+24 cities fetched for BitMobility.
+40 cities fetched for Helbiz.
+199 cities fetched for Bolt.
+49 cities fetched for Spin.
+30 cities fetched for Neuron.
+18 cities fetched for Whoosh.
+17 cities fetched for Quick.
+100 cities fetched for Voi.
+121 cities fetched for Bird.
+29 cities fetched for Dott.
+303 cities fetched for Lime.
+361 cities fetched for Tier.
+0 cities fetched for Link.
+2 cities fetched for Hulaj.
+
+777 cities fetched.
+Cached cities loaded.
+```
+
 ### Available providers
 
 | No. | Provider    | Data source                                   |
@@ -50,6 +79,7 @@
 | 11  | Whoosh      | hardcoded                                     |
 | 12  | Helbiz      | hardcoded                                     |
 | 13  | BitMobility | webscrapped with partially estimated countries|
+| 14  | Hulaj       | webscrapped                                   |
 
 
 ### Development
