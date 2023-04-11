@@ -37,7 +37,6 @@ class DottDataImporter extends DataImporter implements HtmlDataSource
             $country = $this->countries->retrieve($countryName);
             $city = $this->cities->retrieve($cityName, $country);
             $this->provider->addCity($city);
-
         }
 
         return $this;

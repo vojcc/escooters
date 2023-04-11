@@ -49,8 +49,6 @@ $dataImporters = [
     new LimeDataImporter($cities, $countries),
 
 //    new LinkDataImporter($cities, $countries), /*doesn't work - 0 cities fetched*/
-
-
 ];
 
 $timestamp = date("Y-m-d H:i:s");

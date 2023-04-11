@@ -13,6 +13,7 @@ class CountryNamesNormalizer
         }
 
         return match ($name) {
+            "Österreich" => "Austria",
             "Czech Republic" => "Czechia",
             "UAE" => "United Arab Emirates",
             "Uk" => "United Kingdom",
@@ -23,7 +24,7 @@ class CountryNamesNormalizer
         };
     }
 
-    protected static function isUSState(string $name): bool
+    public static function isUSState(string $name): bool
     {
         return in_array($name, [
             "Alabama",

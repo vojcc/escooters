@@ -65,6 +65,14 @@ class LimeDataImporter extends DataImporter implements HtmlDataSource
             }
         }
 
+        $hardcodedCityName = "Legnica";
+        $hardcodedCountryName = "Poland";
+
+        $country = $this->countries->retrieve($hardcodedCountryName);
+        $city = $this->cities->retrieve($hardcodedCityName, $country);
+
+        $this->provider->addCity($city);
+
         return $this;
     }
 }

@@ -89,7 +89,7 @@ class HardcodedCitiesToCountriesAssigner
             "Arad" => "Romania",
             "Daejeon" => "South Korea",
             "Busan" => "South Korea",
-
+            "Legnica" => "Poland",
             default => null,
         };
     }
